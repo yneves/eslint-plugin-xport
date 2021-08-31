@@ -16,16 +16,25 @@ const rule = require("../../../lib/rules/xport"),
 // Tests
 //------------------------------------------------------------------------------
 
-const ruleTester = new RuleTester();
+const ruleTester = new RuleTester({
+  parserOptions: {
+     ecmaVersion: 2015,
+      sourceType: 'module'
+     } ,
+});
+
 ruleTester.run("xport", rule, {
   valid: [
-    // give me some code that won't trigger a warning
+    'export const one = 1;'
   ],
 
   invalid: [
     {
-      code: "x",
-      errors: [{ message: "Fill me in.", type: "Me too" }],
+      code: "export const one = 1; export const two = 2; export default {};",
+      errors: [
+        { message: "Export count: 2" },
+        { message: "Export count: 3" },
+      ],
     },
   ],
 });
