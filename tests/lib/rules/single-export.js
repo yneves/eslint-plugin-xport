@@ -8,7 +8,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
-const rule = require("../../../lib/rules/xport"),
+const rule = require("../../../lib/rules/single-export"),
   RuleTester = require("eslint").RuleTester;
 
 
@@ -18,12 +18,12 @@ const rule = require("../../../lib/rules/xport"),
 
 const ruleTester = new RuleTester({
   parserOptions: {
-     ecmaVersion: 2015,
-      sourceType: 'module'
-     } ,
+    ecmaVersion: 2015,
+    sourceType: 'module'
+  },
 });
 
-ruleTester.run("xport", rule, {
+ruleTester.run("single-export", rule, {
   valid: [
     'export const one = 1;'
   ],
@@ -32,8 +32,8 @@ ruleTester.run("xport", rule, {
     {
       code: "export const one = 1; export const two = 2; export default {};",
       errors: [
-        { message: "Export count: 2" },
-        { message: "Export count: 3" },
+        { message: "Multiple exports not allowed" },
+        { message: "Multiple exports not allowed" },
       ],
     },
   ],
